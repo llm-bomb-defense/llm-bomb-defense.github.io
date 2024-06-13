@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Col, Container, Row, Styles } from '@sveltestrap/sveltestrap';
+  import { Col, Container, Row } from '@sveltestrap/sveltestrap';
   import './styles.scss';
 
   let lastSelectedCell: HTMLElement | undefined = undefined;
@@ -20,8 +20,6 @@
     lastSelectedCell = target;
   }
 </script>
-
-<Styles />
 
 <svelte:head>
   <title>LLM Bomb Defense</title>
