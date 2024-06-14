@@ -1,4 +1,5 @@
 import type { ComponentType } from 'svelte';
+import PolicyStatic from './explanations/PolicyStatic.svelte';
 
 class Attack {
   id: string;
@@ -24,7 +25,7 @@ enum Color { Red = "red", Green = "green", White = "white" }
 export type AttackStatistic = {
   value: number | string;
   color: Color;
-  explanationComponent?: ComponentType;
+  explanation?: { component: ComponentType, props: any };
 }
 type ModelStatistics = { [attack_id: string]: AttackStatistic; }
 type TableData = { [model_id: string]: ModelStatistics }
@@ -69,7 +70,7 @@ const attacks: Attack[] = [
 const tableData: TableData = {
   // policy only models
   "claude-3-opus": {
-    "static": { value: 0, color: Color.Green },
+    "static": { value: 0, color: Color.Green, explanation: { component: PolicyStatic, props: { dataPath: "idk..." } } },
     "dry-ice": { value: 40, color: Color.Red },
     "pair": { value: 0.03, color: Color.Red },
   },

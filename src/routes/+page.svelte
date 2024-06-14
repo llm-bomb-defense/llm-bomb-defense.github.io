@@ -1,4 +1,5 @@
 <script lang="ts">
+  import type { ComponentType } from 'svelte';
   import type { AttackStatistic } from './../lib/table';
 
   import { models, attacks, tableData } from './../lib/table';
@@ -6,12 +7,14 @@
   import './styles.scss';
 
   let lastSelectedCell: HTMLElement | undefined = undefined;
+  let explanation: { component: ComponentType, props: any } | undefined = undefined;
   function cellClick(event: MouseEvent, attackStat: AttackStatistic) {
     if (lastSelectedCell !== undefined) {
       lastSelectedCell.classList.remove('selected');
     }
 
     console.log('Clicked on cell with stat:', attackStat);
+    explanation = attackStat.explanation;
 
     // Walk up the DOM tree until we find an element with the class 'cell'
     let target = event.target as HTMLElement;
@@ -173,11 +176,22 @@
     </Col>
   </Row>
 
-  <Row class="text-center">
+  <!-- Explanation -->
+  <Row class="mt-5">
     <Col md="8" class="offset-md-2">
-      <br />
-      <br />
       <p class="text-justify">
+        Explanation goes here
+      </p>
+      <svelte:component this={explanation?.component} {...explanation?.props} />
+    </Col>
+  </Row>
+
+  <!-- TODO: bibtex citation -->
+
+  <!-- Credits -->
+  <Row class="text-center mt-5">
+    <Col md="8" class="offset-md-2">
+      <p>
         This site's design is adapted from
         <a href="https://say-can.github.io/" target="_blank">say-can</a>.
       </p>
