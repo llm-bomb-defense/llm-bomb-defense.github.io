@@ -7,7 +7,7 @@
   import './styles.scss';
 
   let lastSelectedCell: HTMLElement | undefined = undefined;
-  let explanation: { component: ComponentType, props: any } | undefined = undefined;
+  let explanation: { component: ComponentType; props: any } | undefined = undefined;
   function cellClick(event: MouseEvent, attackStat: AttackStatistic) {
     if (lastSelectedCell !== undefined) {
       lastSelectedCell.classList.remove('selected');
@@ -179,9 +179,7 @@
   <!-- Explanation -->
   <Row class="mt-5">
     <Col md="8" class="offset-md-2">
-      <p class="text-justify">
-        Explanation goes here
-      </p>
+      <p class="text-justify">Explanation goes here</p>
       <svelte:component this={explanation?.component} {...explanation?.props} />
     </Col>
   </Row>

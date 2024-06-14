@@ -3,6 +3,5 @@
 </script>
 
 <p>
-  This is an explanation for the static attack on a policy.
-  It should load data from {dataPath}.
+  This is an explanation for the static attack on a policy. It should load data from {dataPath}.
 </p>
