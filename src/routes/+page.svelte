@@ -1,14 +1,17 @@
 <script lang="ts">
+  import type { AttackStatistic } from './../lib/table';
+
+  import { models, attacks, tableData } from './../lib/table';
   import { Col, Container, Row } from '@sveltestrap/sveltestrap';
   import './styles.scss';
 
   let lastSelectedCell: HTMLElement | undefined = undefined;
-  function cellClick(event: MouseEvent) {
+  function cellClick(event: MouseEvent, attackStat: AttackStatistic) {
     if (lastSelectedCell !== undefined) {
       lastSelectedCell.classList.remove('selected');
     }
 
-    console.log('Clicked!');
+    console.log('Clicked on cell with stat:', attackStat);
 
     // Walk up the DOM tree until we find an element with the class 'cell'
     let target = event.target as HTMLElement;
@@ -107,173 +110,65 @@
       <div class="grid-container justify-content-start justify-content-md-center">
         <!-- Header Row -->
         <div class="header-cell"><!--Model--></div>
-        <div class="header-cell">Static</div>
-        <div class="header-cell">Dry-Ice</div>
-        <div class="header-cell">Prompt Inj.</div>
-        <div class="header-cell">Forgn. Lang.</div>
-        <div class="header-cell">Rand. Search</div>
-        <div class="header-cell">PAIR</div>
+        {#each attacks as attack}
+          <div class="header-cell">{attack.displayStr}</div>
+        {/each}
 
-        <div style="grid-column: 1 / -1; height: 5px;" />
+        <div style="grid-column: 1 / -1; height: 5px;"></div>
         <div style="grid-column: 2 / -1; text-align: center;">Attack Success Rate (%)</div>
+        {#each models.policyOnly as model}
+          <div class="model-cell">{model.displayStr}</div>
+          {#each attacks as attack}
+            {#if attack.id in tableData[model.id]}
+              <button
+                type="button"
+                class="cell {tableData[model.id][attack.id].color.valueOf()}"
+                on:click={(event) => cellClick(event, tableData[model.id][attack.id])}
+                ><div class="cell-data">{tableData[model.id][attack.id].value}</div></button
+              >
+            {:else}
+              <div class="cell gray"><div class="cell-data"></div></div>
+            {/if}
+          {/each}
+        {/each}
 
-        <div class="model-cell">claude-3-opus</div>
-        <button type="button" class="cell green" on:click={cellClick}
-          ><div class="cell-data">0</div></button
-        >
-        <button type="button" class="cell red" on:click={cellClick}
-          ><div class="cell-data">40</div></button
-        >
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <button type="button" class="cell green" on:click={cellClick}
-          ><div class="cell-data">0.03</div></button
-        >
-
-        <div class="model-cell">claude-3-sonnet</div>
-        <div class="cell green"><div class="cell-data">0</div></div>
-        <div class="cell red"><div class="cell-data">20</div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell green"><div class="cell-data">1</div></div>
-
-        <div class="model-cell">claude-3-haiku</div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-
-        <div class="model-cell">gpt-4o-2024-05-13</div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-
-        <div class="model-cell">gpt-4-turbo</div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-
-        <div class="model-cell">gpt-3.5-turbo-0125</div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-
-        <div class="model-cell">gpt-3.5-turbo-1106</div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-
-        <div class="model-cell">adv-sft-op1</div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-
-        <div class="model-cell">adv-sft-op2</div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-
-        <div class="model-cell">adv-sft-op3</div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-
-        <div class="model-cell">R2D2</div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-
-        <div style="grid-column: 1 / -1; height: 15px;" />
+        <div style="grid-column: 1 / -1; height: 15px;"></div>
         <div style="grid-column: 2 / -1; text-align: center;">AlpacaEval Refusal Rate (%)</div>
+        {#each models.baselineClfs as model}
+          <div class="model-cell">{model.displayStr}</div>
+          {#each attacks as attack}
+            {#if attack.id in tableData[model.id]}
+              <button
+                type="button"
+                class="cell {tableData[model.id][attack.id].color.valueOf()}"
+                on:click={(event) => cellClick(event, tableData[model.id][attack.id])}
+                ><div class="cell-data">{tableData[model.id][attack.id].value}</div></button
+              >
+            {:else}
+              <div class="cell gray"><div class="cell-data"></div></div>
+            {/if}
+          {/each}
+        {/each}
 
-        <div class="model-cell">LlamaGuard-2-s</div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-
-        <div class="model-cell">LlamaGuard-2-f</div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-
-        <div class="model-cell">HarmBench-4o</div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-
-        <div class="model-cell">Harmbench-llama</div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-
-        <div class="model-cell">Harmbench-mistral</div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-
-        <div style="grid-column: 1 / -1; height: 15px;" />
+        <div style="grid-column: 1 / -1; height: 15px;"></div>
         <div style="grid-column: 2 / -1; text-align: center;">
           Single working attack input found?
         </div>
-
-        <div class="model-cell">CoT-eg-4t [.00% fpr]</div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-
-        <div class="model-cell">CoT-4o &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [.12% fpr]</div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
-        <div class="cell gray"><div class="cell-data"></div></div>
+        {#each models.ourClfs as model}
+          <div class="model-cell">{model.displayStr}</div>
+          {#each attacks as attack}
+            {#if attack.id in tableData[model.id]}
+              <button
+                type="button"
+                class="cell {tableData[model.id][attack.id].color.valueOf()}"
+                on:click={(event) => cellClick(event, tableData[model.id][attack.id])}
+                ><div class="cell-data">{tableData[model.id][attack.id].value}</div></button
+              >
+            {:else}
+              <div class="cell gray"><div class="cell-data"></div></div>
+            {/if}
+          {/each}
+        {/each}
       </div>
     </Col>
   </Row>
