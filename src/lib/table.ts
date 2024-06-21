@@ -72,7 +72,7 @@ const tableData: TableData = {
   'claude-3-opus': {
     static: {
       value: 0,
-      color: Color.Green,
+      color: Color.Green
     },
     'dry-ice': { value: 40, color: Color.Red },
     pair: { value: 0.03, color: Color.Red }
@@ -83,7 +83,7 @@ const tableData: TableData = {
       value: 0,
       color: Color.Green,
       explanation: { component: PolicyStatic, props: {} }
-    },
+    }
   },
   'claude-4o-2024-05-13': {},
   'gpt-4-turbo': {},
@@ -92,7 +92,7 @@ const tableData: TableData = {
       value: 6.54,
       color: Color.Red,
       explanation: { component: PolicyStatic, props: {} }
-    },
+    }
   },
   'gpt-3.5-turbo-1106': {},
   'adv-sft-op1': {},
