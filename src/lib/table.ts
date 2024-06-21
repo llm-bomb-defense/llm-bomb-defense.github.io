@@ -29,23 +29,23 @@ enum Color {
 export type AttackStatistic = {
   value: number | string;
   color: Color;
-  explanation?: { component: ComponentType; props: any };
+  expl?: { comp: ComponentType; props: any };
 };
 type ModelStatistics = { [attack_id: string]: AttackStatistic };
 type TableData = { [model_id: string]: ModelStatistics };
 
 const models = {
   policyOnly: [
-    new Model('claude-3-opus'),
-    new Model('claude-3-sonnet'),
+    new Model('claude-3-opus-20240229', 'claude-3-opus'),
+    new Model('claude-3-sonnet-20240229', 'claude-3-sonnet'),
     new Model('claude-3-haiku-20240307', 'claude-3-haiku'),
-    new Model('claude-4o-2024-05-13'),
-    new Model('gpt-4-turbo'),
+    new Model('gpt-4o-2024-05-13'),
+    new Model('gpt-4-turbo-2024-04-09', 'gpt-4-turbo'),
     new Model('gpt-3.5-turbo-0125'),
     new Model('gpt-3.5-turbo-1106'),
-    new Model('adv-sft-op1'),
-    new Model('adv-sft-op2'),
-    new Model('adv-sft-op3'),
+    new Model('ft:gpt-3.5-turbo-1106:academicsnyuperez::91cDAREP', 'adv-sft-op1'),
+    new Model('ft:gpt-3.5-turbo-1106:academicsnyuperez::91Wjz8Kd', 'adv-sft-op2'),
+    new Model('ft:gpt-3.5-turbo-1106:academicsnyuperez::91YW891r', 'adv-sft-op3'),
     new Model('r2d2', 'R2D2')
   ],
   baselineClfs: [
@@ -69,35 +69,38 @@ const attacks: Attack[] = [
 
 const tableData: TableData = {
   // policy only models
-  'claude-3-opus': {
-    static: {
-      value: 0,
-      color: Color.Green
-    },
+  'claude-3-opus-20240229': {
+    static: { value: 0, color: Color.Green, expl: { comp: PolicyStatic, props: {} } },
     'dry-ice': { value: 40, color: Color.Red },
     pair: { value: 0.03, color: Color.Red }
   },
-  'claude-3-sonnet': {},
+  'claude-3-sonnet-20240229': {
+    static: { value: 0, color: Color.Green, expl: { comp: PolicyStatic, props: {} } },
+  },
   'claude-3-haiku-20240307': {
-    static: {
-      value: 0,
-      color: Color.Green,
-      explanation: { component: PolicyStatic, props: {} }
-    }
+    static: { value: 0, color: Color.Green, expl: { comp: PolicyStatic, props: {} } },
   },
-  'claude-4o-2024-05-13': {},
-  'gpt-4-turbo': {},
+  'gpt-4o-2024-05-13': {
+    static: { value: 0, color: Color.Green, expl: { comp: PolicyStatic, props: {} } },
+  },
+  'gpt-4-turbo-2024-04-09': {
+    static: { value: 0, color: Color.Green, expl: { comp: PolicyStatic, props: {} } },
+  },
   'gpt-3.5-turbo-0125': {
-    static: {
-      value: 6.54,
-      color: Color.Red,
-      explanation: { component: PolicyStatic, props: {} }
-    }
+    static: { value: 6.54, color: Color.Red, expl: { comp: PolicyStatic, props: {} } }
   },
-  'gpt-3.5-turbo-1106': {},
-  'adv-sft-op1': {},
-  'adv-sft-op2': {},
-  'adv-sft-op3': {},
+  'gpt-3.5-turbo-1106': {
+    static: { value: 4.36, color: Color.Red, expl: { comp: PolicyStatic, props: {} } },
+  },
+  'ft:gpt-3.5-turbo-1106:academicsnyuperez::91cDAREP': {
+    static: { value: 0, color: Color.Green, expl: { comp: PolicyStatic, props: {} } },
+  },
+  'ft:gpt-3.5-turbo-1106:academicsnyuperez::91Wjz8Kd': {
+    static: { value: 0, color: Color.Green, expl: { comp: PolicyStatic, props: {} } },
+  },
+  'ft:gpt-3.5-turbo-1106:academicsnyuperez::91YW891r': {
+    static: { value: 0, color: Color.Green, expl: { comp: PolicyStatic, props: {} } },
+  },
   r2d2: {},
   // baseline classifiers
   'llama-guard-2-s': {

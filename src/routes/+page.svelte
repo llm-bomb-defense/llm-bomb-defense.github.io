@@ -10,7 +10,7 @@
 
   let selectedCell = queryParam('selectedCell', ssp.lz<SelectedCellType>());
   $: explanation = $selectedCell
-    ? tableData[$selectedCell.modelId][$selectedCell.attackId].explanation
+    ? tableData[$selectedCell.modelId][$selectedCell.attackId].expl
     : undefined;
 </script>
 
@@ -190,7 +190,7 @@
         </p>
       {/if}
       <svelte:component
-        this={explanation?.component}
+        this={explanation?.comp}
         modelId={$selectedCell?.modelId}
         attackId={$selectedCell?.attackId}
         {...explanation?.props}
