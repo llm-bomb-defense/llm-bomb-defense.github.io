@@ -1,11 +1,16 @@
 <script lang="ts">
-  import { models, attacks, tableData } from '../lib/table';
+  import { ssp, queryParam } from 'sveltekit-search-params';
   import { Col, Container, Row } from '@sveltestrap/sveltestrap';
+
+  import { models, attacks, tableData } from '../lib/table';
   import './styles.scss';
 
-  let selectedCell: { modelId: string; attackId: string } | undefined = undefined;
-  $: explanation = selectedCell
-    ? tableData[selectedCell.modelId][selectedCell.attackId].explanation
+  // let selectedCell: { modelId: string; attackId: string } | undefined = undefined;
+  type SelectedCellType = { modelId: string; attackId: string };
+
+  let selectedCell = queryParam('selectedCell', ssp.lz<SelectedCellType>());
+  $: explanation = $selectedCell
+    ? tableData[$selectedCell.modelId][$selectedCell.attackId].explanation
     : undefined;
 </script>
 
@@ -109,12 +114,12 @@
                 type="button"
                 class="cell {tableData[model.id][
                   attack.id
-                ].color.valueOf()} {selectedCell?.modelId === model.id &&
-                selectedCell?.attackId === attack.id
+                ].color.valueOf()} {$selectedCell?.modelId === model.id &&
+                $selectedCell?.attackId === attack.id
                   ? 'selected'
                   : ''}"
                 on:click={(_) => {
-                  selectedCell = { modelId: model.id, attackId: attack.id };
+                  $selectedCell = { modelId: model.id, attackId: attack.id };
                 }}><div class="cell-data">{tableData[model.id][attack.id].value}</div></button
               >
             {:else}
@@ -133,12 +138,12 @@
                 type="button"
                 class="cell {tableData[model.id][
                   attack.id
-                ].color.valueOf()} {selectedCell?.modelId === model.id &&
-                selectedCell?.attackId === attack.id
+                ].color.valueOf()} {$selectedCell?.modelId === model.id &&
+                $selectedCell?.attackId === attack.id
                   ? 'selected'
                   : ''}"
                 on:click={(_) => {
-                  selectedCell = { modelId: model.id, attackId: attack.id };
+                  $selectedCell = { modelId: model.id, attackId: attack.id };
                 }}><div class="cell-data">{tableData[model.id][attack.id].value}</div></button
               >
             {:else}
@@ -159,12 +164,12 @@
                 type="button"
                 class="cell {tableData[model.id][
                   attack.id
-                ].color.valueOf()} {selectedCell?.modelId === model.id &&
-                selectedCell?.attackId === attack.id
+                ].color.valueOf()} {$selectedCell?.modelId === model.id &&
+                $selectedCell?.attackId === attack.id
                   ? 'selected'
                   : ''}"
                 on:click={(_) => {
-                  selectedCell = { modelId: model.id, attackId: attack.id };
+                  $selectedCell = { modelId: model.id, attackId: attack.id };
                 }}><div class="cell-data">{tableData[model.id][attack.id].value}</div></button
               >
             {:else}
@@ -186,8 +191,8 @@
       {/if}
       <svelte:component
         this={explanation?.component}
-        modelId={selectedCell?.modelId}
-        attackId={selectedCell?.attackId}
+        modelId={$selectedCell?.modelId}
+        attackId={$selectedCell?.attackId}
         {...explanation?.props}
       />
     </Col>

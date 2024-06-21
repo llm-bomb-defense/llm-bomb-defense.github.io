@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { TranscriptWithLabels } from '../data-models';
 
+  import { mean } from 'mathjs';
   import TranscriptDisplay from '../TranscriptDisplay.svelte';
 
   import { jsonl } from 'js-jsonl';
@@ -12,6 +13,21 @@
     const rawText = await response.text();
 
     const data = jsonl.parse<TranscriptWithLabels>(rawText);
+
+    // Sort data based average rating
+    data.sort((a, b) => {
+      const aRating = mean(Object.values(a.labels).map((s) => parseInt(s)));
+      const bRating = mean(Object.values(b.labels).map((s) => parseInt(s)));
+
+      // First sort by average rating, descending
+      if (aRating != bRating) return bRating - aRating;
+
+      // Then sort by length of the transcript, ascending
+      const aLength = a.data.user_input.length + a.data.assistant_response.length;
+      const bLength = b.data.user_input.length + b.data.assistant_response.length;
+      return aLength - bLength;
+    });
+
     return data;
   })();
 </script>
