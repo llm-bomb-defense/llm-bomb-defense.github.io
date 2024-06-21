@@ -76,7 +76,13 @@
       the buttons to navigate, use the left and right arrow keys, or enter a number manually.
     </p>
 
-    <p>A total of {transcripts.length} transcripts were flagged by our CoT-eg-4t classifier.</p>
+    <p>
+      A total of {transcripts.length} transcripts were flagged by our CoT-eg-4t classifier. You can download
+      the raw data of all flagged transcripts and human judgments at
+      <a href={`data/static/${modelId}/human-labels.jsonl`} target="_blank">
+        data/static/{modelId}/human-labels.jsonl
+      </a>.
+    </p>
 
     <TranscriptDisplay {transcripts} />
   {:else}
