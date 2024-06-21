@@ -38,7 +38,7 @@ const models = {
   policyOnly: [
     new Model('claude-3-opus'),
     new Model('claude-3-sonnet'),
-    new Model('claude-3-haiku'),
+    new Model('claude-3-haiku-20240307', 'claude-3-haiku'),
     new Model('claude-4o-2024-05-13'),
     new Model('gpt-4-turbo'),
     new Model('gpt-3.5-turbo-0125'),
@@ -73,16 +73,27 @@ const tableData: TableData = {
     static: {
       value: 0,
       color: Color.Green,
-      explanation: { component: PolicyStatic, props: { dataPath: 'idk...' } }
     },
     'dry-ice': { value: 40, color: Color.Red },
     pair: { value: 0.03, color: Color.Red }
   },
   'claude-3-sonnet': {},
-  'claude-3-haiku': {},
+  'claude-3-haiku-20240307': {
+    static: {
+      value: 0,
+      color: Color.Green,
+      explanation: { component: PolicyStatic, props: {} }
+    },
+  },
   'claude-4o-2024-05-13': {},
   'gpt-4-turbo': {},
-  'gpt-3.5-turbo-0125': {},
+  'gpt-3.5-turbo-0125': {
+    static: {
+      value: 6.54,
+      color: Color.Red,
+      explanation: { component: PolicyStatic, props: {} }
+    },
+  },
   'gpt-3.5-turbo-1106': {},
   'adv-sft-op1': {},
   'adv-sft-op2': {},

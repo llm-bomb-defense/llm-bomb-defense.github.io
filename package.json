@@ -34,6 +34,7 @@
   },
   "type": "module",
   "dependencies": {
-    "@sveltestrap/sveltestrap": "^6.2.7"
+    "@sveltestrap/sveltestrap": "^6.2.7",
+    "js-jsonl": "^1.1.1"
   }
 }
