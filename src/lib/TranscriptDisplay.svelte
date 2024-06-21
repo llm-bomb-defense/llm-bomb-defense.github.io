@@ -1,27 +1,71 @@
+<!-- Coauthor: ChatGPT-4o. -->
+
 <script lang="ts">
   import type { TranscriptWithLabels } from './data-models';
   export let transcripts: TranscriptWithLabels[] = [];
+
+  let currentIndex = 0;
+
+  const goToPrevious = () => {
+    currentIndex = (currentIndex - 1 + transcripts.length) % transcripts.length;
+  };
+  const goToNext = () => {
+    currentIndex = (currentIndex + 1) % transcripts.length;
+  };
+  const handleKeydown = (event: KeyboardEvent) => {
+    if (event.key === 'ArrowLeft') {
+      goToPrevious();
+    } else if (event.key === 'ArrowRight') {
+      goToNext();
+    }
+  };
+  const handleInput = (event: Event) => {
+    const input = event.target as HTMLInputElement;
+    const value = parseInt(input.value, 10);
+    if (value >= 1 && value <= transcripts.length) {
+      currentIndex = value - 1;
+    }
+  };
 </script>
 
 <div class="transcript-container">
-  {#each transcripts as transcript (transcript.data_hash)}
+  <div
+    class="navigation"
+    role="toolbar"
+    aria-label="Transcript Navigator"
+    on:keydown={handleKeydown}
+    tabindex="0"
+  >
+    <button on:click={goToPrevious}>&lt; Previous</button>
+    <input
+      type="number"
+      min="1"
+      max={transcripts.length}
+      value={currentIndex + 1}
+      on:input={handleInput}
+    />
+    <button on:click={goToNext}>Next &gt;</button>
+  </div>
+  {#if transcripts.length > 0}
     <div class="transcript-item">
       <div class="labels">
         <div>Labels:</div>
-        {#each Object.entries(transcript.labels) as [user, label]}
+        {#each Object.entries(transcripts[currentIndex].labels) as [user, label]}
           <div class="label-item">{user}: {label}</div>
         {/each}
       </div>
       <div class="user-input">
-        User Input
-        <pre><code>{transcript.data.user_input}</code></pre>
+        User Input:
+        <pre><code>{transcripts[currentIndex].data.user_input}</code></pre>
       </div>
       <div class="assistant-response">
-        Assistant Response
-        <pre><code>{transcript.data.assistant_response}</code></pre>
+        Assistant Response:
+        <pre><code>{transcripts[currentIndex].data.assistant_response}</code></pre>
       </div>
     </div>
-  {/each}
+  {:else}
+    <p>No transcripts available.</p>
+  {/if}
 </div>
 
 <style>
@@ -32,22 +76,25 @@
     border-radius: 10px;
     background-color: #f9f9f9;
   }
-  .transcript-item {
-    margin-bottom: 20px;
+  .navigation {
+    display: flex;
+    /* align-items: center; */
+    /* justify-content: center; */
+    margin-bottom: 10px;
   }
-  .user-input,
-  .assistant-response {
-    margin: 10px 0;
+  .navigation button {
+    margin: 0 10px;
+    padding: 4px;
+    border: 1px solid #ccc;
+    background-color: #f5f5f5;
+    cursor: pointer;
   }
-  .labels {
-    margin-top: 10px;
-    padding: 10px;
-    border: 1px solid #ddd;
+  .navigation input {
+    width: 70px; /* Increase the width */
+    text-align: center;
+    padding: 5px;
+    border: 1px solid #ccc;
     border-radius: 5px;
-    background-color: #f1f1f1;
-  }
-  .label-item {
-    margin: 5px 0;
   }
   pre {
     background-color: #f5f5f5;
