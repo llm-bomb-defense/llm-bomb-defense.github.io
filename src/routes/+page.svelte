@@ -1,43 +1,12 @@
 <script lang="ts">
-  import type { ComponentType } from 'svelte';
-  import type { AttackStatistic } from '../lib/table';
-
   import { models, attacks, tableData } from '../lib/table';
   import { Col, Container, Row } from '@sveltestrap/sveltestrap';
   import './styles.scss';
 
-  let lastSelectedCell: HTMLElement | undefined = undefined;
-  let selectedData:
-    | {
-        modelId: string;
-        attackId: string;
-        explanation: { component: ComponentType; props: any } | undefined;
-      }
-    | undefined = undefined;
-  function cellClick(event: MouseEvent, modelId: string, attackId: string) {
-    const attackStat: AttackStatistic = tableData[modelId][attackId];
-
-    if (lastSelectedCell !== undefined) {
-      lastSelectedCell.classList.remove('selected');
-    }
-
-    console.log('Clicked on cell', modelId, attackId);
-    selectedData = {
-      modelId,
-      attackId,
-      explanation: attackStat.explanation
-    };
-    console.log(selectedData);
-
-    // Walk up the DOM tree until we find an element with the class 'cell'
-    let target = event.target as HTMLElement;
-    while (!target.classList.contains('cell')) {
-      target = target.parentElement as HTMLElement;
-    }
-
-    target.classList.add('selected');
-    lastSelectedCell = target;
-  }
+  let selectedCell: { modelId: string; attackId: string } | undefined = undefined;
+  $: explanation = selectedCell
+    ? tableData[selectedCell.modelId][selectedCell.attackId].explanation
+    : undefined;
 </script>
 
 <svelte:head>
@@ -138,9 +107,15 @@
             {#if attack.id in tableData[model.id]}
               <button
                 type="button"
-                class="cell {tableData[model.id][attack.id].color.valueOf()}"
-                on:click={(event) => cellClick(event, model.id, attack.id)}
-                ><div class="cell-data">{tableData[model.id][attack.id].value}</div></button
+                class="cell {tableData[model.id][
+                  attack.id
+                ].color.valueOf()} {selectedCell?.modelId === model.id &&
+                selectedCell?.attackId === attack.id
+                  ? 'selected'
+                  : ''}"
+                on:click={(_) => {
+                  selectedCell = { modelId: model.id, attackId: attack.id };
+                }}><div class="cell-data">{tableData[model.id][attack.id].value}</div></button
               >
             {:else}
               <div class="cell gray"><div class="cell-data"></div></div>
@@ -156,9 +131,15 @@
             {#if attack.id in tableData[model.id]}
               <button
                 type="button"
-                class="cell {tableData[model.id][attack.id].color.valueOf()}"
-                on:click={(event) => cellClick(event, model.id, attack.id)}
-                ><div class="cell-data">{tableData[model.id][attack.id].value}</div></button
+                class="cell {tableData[model.id][
+                  attack.id
+                ].color.valueOf()} {selectedCell?.modelId === model.id &&
+                selectedCell?.attackId === attack.id
+                  ? 'selected'
+                  : ''}"
+                on:click={(_) => {
+                  selectedCell = { modelId: model.id, attackId: attack.id };
+                }}><div class="cell-data">{tableData[model.id][attack.id].value}</div></button
               >
             {:else}
               <div class="cell gray"><div class="cell-data"></div></div>
@@ -176,9 +157,15 @@
             {#if attack.id in tableData[model.id]}
               <button
                 type="button"
-                class="cell {tableData[model.id][attack.id].color.valueOf()}"
-                on:click={(event) => cellClick(event, model.id, attack.id)}
-                ><div class="cell-data">{tableData[model.id][attack.id].value}</div></button
+                class="cell {tableData[model.id][
+                  attack.id
+                ].color.valueOf()} {selectedCell?.modelId === model.id &&
+                selectedCell?.attackId === attack.id
+                  ? 'selected'
+                  : ''}"
+                on:click={(_) => {
+                  selectedCell = { modelId: model.id, attackId: attack.id };
+                }}><div class="cell-data">{tableData[model.id][attack.id].value}</div></button
               >
             {:else}
               <div class="cell gray"><div class="cell-data"></div></div>
@@ -192,16 +179,16 @@
   <!-- Explanation -->
   <Row class="mt-5">
     <Col md="8" class="offset-md-2">
-      {#if selectedData?.explanation === undefined}
+      {#if explanation === undefined}
         <p class="text-center">
           After you click a valid cell, the details behind the statistic will show up here.
         </p>
       {/if}
       <svelte:component
-        this={selectedData?.explanation?.component}
-        modelId={selectedData?.modelId}
-        attackId={selectedData?.attackId}
-        {...selectedData?.explanation?.props}
+        this={explanation?.component}
+        modelId={selectedCell?.modelId}
+        attackId={selectedCell?.attackId}
+        {...explanation?.props}
       />
     </Col>
   </Row>
