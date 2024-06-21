@@ -2,9 +2,15 @@
 
 <script lang="ts">
   import type { TranscriptWithLabels } from './data-models';
-  export let transcripts: TranscriptWithLabels[] = [];
+  import { getAvgRating } from './data-models';
+  export let transcripts: TranscriptWithLabels[];
+
+  const capitalizeName = (name: string) => {
+    return name.charAt(0).toUpperCase() + name.slice(1);
+  };
 
   let currentIndex = 0;
+  $: curTranscript = transcripts[currentIndex];
 
   const goToPrevious = () => {
     currentIndex = (currentIndex - 1 + transcripts.length) % transcripts.length;
@@ -49,18 +55,22 @@
   {#if transcripts.length > 0}
     <div class="transcript-item">
       <div class="labels">
-        <div>Labels:</div>
-        {#each Object.entries(transcripts[currentIndex].labels) as [user, label]}
-          <div class="label-item">{user}: {label}</div>
-        {/each}
+        <div>
+          Human Labels &nbsp;&nbsp; (avg. rating {getAvgRating(curTranscript.labels)} / 10):
+        </div>
+        <ul>
+          {#each Object.entries(curTranscript.labels) as [user, label]}
+            <li>{capitalizeName(user)}: &nbsp;&nbsp; {label} / 10</li>
+          {/each}
+        </ul>
       </div>
       <div class="user-input">
         User Input:
-        <pre><code>{transcripts[currentIndex].data.user_input}</code></pre>
+        <pre><code>{curTranscript.data.user_input}</code></pre>
       </div>
       <div class="assistant-response">
-        Assistant Response:
-        <pre><code>{transcripts[currentIndex].data.assistant_response}</code></pre>
+        Model Response:
+        <pre><code>{curTranscript.data.assistant_response}</code></pre>
       </div>
     </div>
   {:else}

@@ -57,6 +57,16 @@ const models = {
   ],
   ourClfs: [new Model('cot-eg-4t', 'CoT-eg-4t'), new Model('cot-4o', 'CoT-4o')]
 };
+const getModelDisplayName = (modelId: string) => {
+  for (const modelGroup of Object.values(models)) {
+    for (const model of modelGroup) {
+      if (model.id === modelId) {
+        return model.displayStr;
+      }
+    }
+  }
+  return modelId;
+}
 
 const attacks: Attack[] = [
   new Attack('static', 'Static'),
@@ -122,4 +132,9 @@ const tableData: TableData = {
   }
 };
 
-export { models, attacks, tableData };
+export {
+  models,
+  getModelDisplayName,
+  attacks,
+  tableData
+};
