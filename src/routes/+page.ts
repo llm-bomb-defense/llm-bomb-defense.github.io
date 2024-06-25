@@ -4,7 +4,7 @@ import type { RenderedTable } from '../lib/table';
 import { table } from '../lib/table';
 export const prerender = true;
 
-export const load: PageLoad = async ({ fetch }) => {
+export const load: PageLoad = async ({ data }) => {
   let renderedTable: RenderedTable = {};
   for (const modelId in table) {
     renderedTable[modelId] = {};
@@ -13,7 +13,7 @@ export const load: PageLoad = async ({ fetch }) => {
       renderedTable[modelId][attackId] = {
         explComp: cell.explComp,
         explExtraProps: cell.explExtraProps,
-        content: await cell.getContent(modelId, attackId, fetch)
+        content: data.renderedTableContent[modelId][attackId]
       };
     }
   }

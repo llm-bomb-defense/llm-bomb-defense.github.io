@@ -1,7 +1,7 @@
 import type { ComponentType } from 'svelte';
 import type { ServerFetch } from './utils';
 import PolicyStatic, { PolicyStaticNS } from './explanations/PolicyStatic.svelte';
-import type { Server } from '@sveltejs/kit';
+import PolicyDryIce, { PolicyDryIceNS } from './explanations/PolicyDryIce.svelte';
 
 class Attack {
   id: string;
@@ -47,6 +47,7 @@ export type RenderedTableCell = {
   content: CellContent;
 };
 export type RenderedTable = { [model_id: string]: { [attack_id: string]: RenderedTableCell } };
+export type RenderedTableContent = { [model_id: string]: { [attack_id: string]: CellContent } };
 
 export const models = {
   policyOnly: [
@@ -94,34 +95,44 @@ export const attacks: Attack[] = [
 export const table: Table = {
   // policy only models
   'claude-3-opus-20240229': {
-    static: { explComp: PolicyStatic, getContent: PolicyStaticNS.getCellContent }
+    static: { explComp: PolicyStatic, getContent: PolicyStaticNS.getCellContent },
+    'dry-ice': { explComp: PolicyDryIce, getContent: PolicyDryIceNS.getCellContent }
   },
   'claude-3-sonnet-20240229': {
-    static: { explComp: PolicyStatic, getContent: PolicyStaticNS.getCellContent }
+    static: { explComp: PolicyStatic, getContent: PolicyStaticNS.getCellContent },
+    'dry-ice': { explComp: PolicyDryIce, getContent: PolicyDryIceNS.getCellContent }
   },
   'claude-3-haiku-20240307': {
-    static: { explComp: PolicyStatic, getContent: PolicyStaticNS.getCellContent }
+    static: { explComp: PolicyStatic, getContent: PolicyStaticNS.getCellContent },
+    'dry-ice': { explComp: PolicyDryIce, getContent: PolicyDryIceNS.getCellContent }
   },
   'gpt-4o-2024-05-13': {
-    static: { explComp: PolicyStatic, getContent: PolicyStaticNS.getCellContent }
+    static: { explComp: PolicyStatic, getContent: PolicyStaticNS.getCellContent },
+    'dry-ice': { explComp: PolicyDryIce, getContent: PolicyDryIceNS.getCellContent }
   },
   'gpt-4-turbo-2024-04-09': {
-    static: { explComp: PolicyStatic, getContent: PolicyStaticNS.getCellContent }
+    static: { explComp: PolicyStatic, getContent: PolicyStaticNS.getCellContent },
+    'dry-ice': { explComp: PolicyDryIce, getContent: PolicyDryIceNS.getCellContent }
   },
   'gpt-3.5-turbo-0125': {
-    static: { explComp: PolicyStatic, getContent: PolicyStaticNS.getCellContent }
+    static: { explComp: PolicyStatic, getContent: PolicyStaticNS.getCellContent },
+    'dry-ice': { explComp: PolicyDryIce, getContent: PolicyDryIceNS.getCellContent }
   },
   'gpt-3.5-turbo-1106': {
-    static: { explComp: PolicyStatic, getContent: PolicyStaticNS.getCellContent }
+    static: { explComp: PolicyStatic, getContent: PolicyStaticNS.getCellContent },
+    'dry-ice': { explComp: PolicyDryIce, getContent: PolicyDryIceNS.getCellContent }
   },
   'ft:gpt-3.5-turbo-1106:academicsnyuperez::91cDAREP': {
-    static: { explComp: PolicyStatic, getContent: PolicyStaticNS.getCellContent }
+    static: { explComp: PolicyStatic, getContent: PolicyStaticNS.getCellContent },
+    'dry-ice': { explComp: PolicyDryIce, getContent: PolicyDryIceNS.getCellContent }
   },
   'ft:gpt-3.5-turbo-1106:academicsnyuperez::91Wjz8Kd': {
-    static: { explComp: PolicyStatic, getContent: PolicyStaticNS.getCellContent }
+    static: { explComp: PolicyStatic, getContent: PolicyStaticNS.getCellContent },
+    'dry-ice': { explComp: PolicyDryIce, getContent: PolicyDryIceNS.getCellContent }
   },
   'ft:gpt-3.5-turbo-1106:academicsnyuperez::91YW891r': {
-    static: { explComp: PolicyStatic, getContent: PolicyStaticNS.getCellContent }
+    static: { explComp: PolicyStatic, getContent: PolicyStaticNS.getCellContent },
+    'dry-ice': { explComp: PolicyDryIce, getContent: PolicyDryIceNS.getCellContent }
   },
   r2d2: {},
   // baseline classifiers
