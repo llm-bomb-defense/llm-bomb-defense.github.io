@@ -12,4 +12,4 @@ export type TranscriptWithLabels = {
 export const getAvgRating = (labels: Record<string, string>) => {
   const ratings = Object.values(labels).map((label) => parseInt(label));
   return mean(ratings);
-}
+};

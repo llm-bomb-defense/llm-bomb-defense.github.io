@@ -5,6 +5,20 @@
   import { getAvgRating } from './data-models';
   export let transcripts: TranscriptWithLabels[];
 
+  // Sort transcripts based average rating
+  transcripts.sort((a, b) => {
+    const aRating = getAvgRating(a.labels);
+    const bRating = getAvgRating(b.labels);
+
+    // First sort by average rating, higher ratings first
+    if (aRating != bRating) return bRating - aRating;
+
+    // Then sort by length of the transcript, shorter lengths first
+    const aLength = a.data.user_input.length + a.data.assistant_response.length;
+    const bLength = b.data.user_input.length + b.data.assistant_response.length;
+    return aLength - bLength;
+  });
+
   const capitalizeName = (name: string) => {
     return name.charAt(0).toUpperCase() + name.slice(1);
   };
