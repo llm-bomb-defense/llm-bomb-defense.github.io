@@ -9,10 +9,7 @@
   import { Color } from '../table';
 
   export namespace PolicyDryIceNS {
-    export const getTranscripts = async (
-      modelId: string,
-      serverFetch?: ServerFetch
-    ) => {
+    export const getTranscripts = async (modelId: string, serverFetch?: ServerFetch) => {
       const response = await (serverFetch || fetch)(`data/dry-ice/${modelId}/human-labels.jsonl`);
       const rawText = await response.text();
       return jsonl.parse<TranscriptWithLabels>(rawText);

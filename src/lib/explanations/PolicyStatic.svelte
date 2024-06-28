@@ -9,10 +9,7 @@
   import { Color } from '../table';
 
   export namespace PolicyStaticNS {
-    export const getTranscripts = async (
-      modelId: string,
-      serverFetch?: ServerFetch
-    ) => {
+    export const getTranscripts = async (modelId: string, serverFetch?: ServerFetch) => {
       const response = await (serverFetch || fetch)(`data/static/${modelId}/human-labels.jsonl`);
       const rawText = await response.text();
       return jsonl.parse<TranscriptWithLabels>(rawText);
