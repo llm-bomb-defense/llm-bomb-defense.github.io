@@ -69,6 +69,7 @@
 
   export let modelId: string;
   export let attackId: string;
+  console.log(`Loading data for ${modelId} x ${attackId}...`);
 
   $: modelIdDisp = getModelDisplayName(modelId);
   $: dataPromise = (async () => {
@@ -86,7 +87,7 @@
   <p>
     The cell you selected attacks <strong>{modelIdDisp}</strong> ({modelId}) using an adversarial
     suffix found via grey-box (i.e. logit-access) random-search. We sample 200 responses from {modelIdDisp}
-    at temperature 0 (the 200 samples are distinct due to API non-determinism). Out of these 200 responses,
+    at temperature 0 (the 200 samples are distinct due to API non-determinism). Our of these 200 responses,
     we flagged <strong>{round(100 * data.flagged_stat, 2)}%</strong>
     using an automated word-based filter. Among these flagged responses, we manually judged 10 random
     responses and found that

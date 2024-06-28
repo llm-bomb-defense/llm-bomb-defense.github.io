@@ -38,6 +38,7 @@
 
   export let modelId: string;
   export let attackId: string;
+  console.log(`Loading data for ${modelId} x ${attackId}...`);
 
   $: modelIdDisp = getModelDisplayName(modelId);
   $: dataPromise = (async () => {
