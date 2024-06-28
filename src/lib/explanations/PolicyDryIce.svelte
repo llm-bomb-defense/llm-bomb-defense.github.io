@@ -11,7 +11,6 @@
   export namespace PolicyDryIceNS {
     export const getTranscripts = async (
       modelId: string,
-      attackId: string,
       serverFetch?: ServerFetch
     ) => {
       const response = await (serverFetch || fetch)(`data/dry-ice/${modelId}/human-labels.jsonl`);
@@ -28,7 +27,7 @@
       attackId: string,
       serverFetch: ServerFetch
     ): Promise<CellContent> => {
-      const transcripts = await getTranscripts(modelId, attackId, serverFetch);
+      const transcripts = await getTranscripts(modelId, serverFetch);
       const stat = getStatFromTranscripts(transcripts);
       const color = stat > 0 ? Color.Red : Color.Green;
       return { value: round(100 * stat, 2), color };
@@ -45,7 +44,7 @@
 
   $: modelIdDisp = getModelDisplayName(modelId);
   $: dataPromise = (async () => {
-    const transcripts = await PolicyDryIceNS.getTranscripts(modelId, attackId);
+    const transcripts = await PolicyDryIceNS.getTranscripts(modelId);
     const stat = PolicyDryIceNS.getStatFromTranscripts(transcripts);
     return { transcripts, stat };
   })();

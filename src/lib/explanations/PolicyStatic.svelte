@@ -11,7 +11,6 @@
   export namespace PolicyStaticNS {
     export const getTranscripts = async (
       modelId: string,
-      attackId: string,
       serverFetch?: ServerFetch
     ) => {
       const response = await (serverFetch || fetch)(`data/static/${modelId}/human-labels.jsonl`);
@@ -28,7 +27,7 @@
       attackId: string,
       serverFetch: ServerFetch
     ): Promise<CellContent> => {
-      const transcripts = await getTranscripts(modelId, attackId, serverFetch);
+      const transcripts = await getTranscripts(modelId, serverFetch);
       const stat = getStatFromTranscripts(transcripts);
       const color = stat > 0 ? Color.Red : Color.Green;
       return { value: round(100 * stat, 2), color };
@@ -45,7 +44,7 @@
 
   $: modelIdDisp = getModelDisplayName(modelId);
   $: dataPromise = (async () => {
-    const transcripts = await PolicyStaticNS.getTranscripts(modelId, attackId);
+    const transcripts = await PolicyStaticNS.getTranscripts(modelId);
     const stat = PolicyStaticNS.getStatFromTranscripts(transcripts);
     return { transcripts, stat };
   })();

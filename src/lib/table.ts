@@ -2,6 +2,7 @@ import type { ComponentType } from 'svelte';
 import type { ServerFetch } from './utils';
 import PolicyStatic, { PolicyStaticNS } from './explanations/PolicyStatic.svelte';
 import PolicyDryIce, { PolicyDryIceNS } from './explanations/PolicyDryIce.svelte';
+import PolicyRandSearch, { PolicyRandSearchNS } from './explanations/PolicyRandSearch.svelte';
 
 class Attack {
   id: string;
@@ -112,27 +113,33 @@ export const table: Table = {
   },
   'gpt-4-turbo-2024-04-09': {
     static: { explComp: PolicyStatic, getContent: PolicyStaticNS.getCellContent },
-    'dry-ice': { explComp: PolicyDryIce, getContent: PolicyDryIceNS.getCellContent }
+    'dry-ice': { explComp: PolicyDryIce, getContent: PolicyDryIceNS.getCellContent },
+    'rand-search': { explComp: PolicyRandSearch, getContent: PolicyRandSearchNS.getCellContent }
   },
   'gpt-3.5-turbo-0125': {
     static: { explComp: PolicyStatic, getContent: PolicyStaticNS.getCellContent },
-    'dry-ice': { explComp: PolicyDryIce, getContent: PolicyDryIceNS.getCellContent }
+    'dry-ice': { explComp: PolicyDryIce, getContent: PolicyDryIceNS.getCellContent },
+    'rand-search': { explComp: PolicyRandSearch, getContent: PolicyRandSearchNS.getCellContent }
   },
   'gpt-3.5-turbo-1106': {
     static: { explComp: PolicyStatic, getContent: PolicyStaticNS.getCellContent },
-    'dry-ice': { explComp: PolicyDryIce, getContent: PolicyDryIceNS.getCellContent }
+    'dry-ice': { explComp: PolicyDryIce, getContent: PolicyDryIceNS.getCellContent },
+    'rand-search': { explComp: PolicyRandSearch, getContent: PolicyRandSearchNS.getCellContent }
   },
   'ft:gpt-3.5-turbo-1106:academicsnyuperez::91cDAREP': {
     static: { explComp: PolicyStatic, getContent: PolicyStaticNS.getCellContent },
-    'dry-ice': { explComp: PolicyDryIce, getContent: PolicyDryIceNS.getCellContent }
+    'dry-ice': { explComp: PolicyDryIce, getContent: PolicyDryIceNS.getCellContent },
+    'rand-search': { explComp: PolicyRandSearch, getContent: PolicyRandSearchNS.getCellContent }
   },
   'ft:gpt-3.5-turbo-1106:academicsnyuperez::91Wjz8Kd': {
     static: { explComp: PolicyStatic, getContent: PolicyStaticNS.getCellContent },
-    'dry-ice': { explComp: PolicyDryIce, getContent: PolicyDryIceNS.getCellContent }
+    'dry-ice': { explComp: PolicyDryIce, getContent: PolicyDryIceNS.getCellContent },
+    'rand-search': { explComp: PolicyRandSearch, getContent: PolicyRandSearchNS.getCellContent }
   },
   'ft:gpt-3.5-turbo-1106:academicsnyuperez::91YW891r': {
     static: { explComp: PolicyStatic, getContent: PolicyStaticNS.getCellContent },
-    'dry-ice': { explComp: PolicyDryIce, getContent: PolicyDryIceNS.getCellContent }
+    'dry-ice': { explComp: PolicyDryIce, getContent: PolicyDryIceNS.getCellContent },
+    'rand-search': { explComp: PolicyRandSearch, getContent: PolicyRandSearchNS.getCellContent }
   },
   r2d2: {},
   // baseline classifiers
