@@ -5,7 +5,7 @@ import { table } from '../lib/table';
 export const prerender = true;
 
 export const load: PageServerLoad = async ({ fetch }) => {
-  let renderedTableContent: RenderedTableContent = {};
+  const renderedTableContent: RenderedTableContent = {};
   for (const modelId in table) {
     renderedTableContent[modelId] = {};
     for (const attackId in table[modelId]) {

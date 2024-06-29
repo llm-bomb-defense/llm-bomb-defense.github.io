@@ -3,6 +3,7 @@ import type { ServerFetch } from './utils';
 import PolicyStatic, { PolicyStaticNS } from './explanations/PolicyStatic.svelte';
 import PolicyDryIce, { PolicyDryIceNS } from './explanations/PolicyDryIce.svelte';
 import PolicyRandSearch, { PolicyRandSearchNS } from './explanations/PolicyRandSearch.svelte';
+import PolicyPAIR, { PolicyPAIRNS } from './explanations/PolicyPAIR.svelte';
 
 class Attack {
   id: string;
@@ -62,7 +63,7 @@ export const models = {
     new Model('ft:gpt-3.5-turbo-1106:academicsnyuperez::91cDAREP', 'adv-sft-op1'),
     new Model('ft:gpt-3.5-turbo-1106:academicsnyuperez::91Wjz8Kd', 'adv-sft-op2'),
     new Model('ft:gpt-3.5-turbo-1106:academicsnyuperez::91YW891r', 'adv-sft-op3'),
-    new Model('r2d2', 'R2D2')
+    new Model('zephyr_7b_r2d2', 'r2d2')
   ],
   baselineClfs: [
     new Model('llama-guard-2-s', 'LlamaGuard-2-s'),
@@ -97,51 +98,63 @@ export const table: Table = {
   // policy only models
   'claude-3-opus-20240229': {
     static: { explComp: PolicyStatic, getContent: PolicyStaticNS.getCellContent },
-    'dry-ice': { explComp: PolicyDryIce, getContent: PolicyDryIceNS.getCellContent }
+    'dry-ice': { explComp: PolicyDryIce, getContent: PolicyDryIceNS.getCellContent },
+    pair: { explComp: PolicyPAIR, getContent: PolicyPAIRNS.getCellContent }
   },
   'claude-3-sonnet-20240229': {
     static: { explComp: PolicyStatic, getContent: PolicyStaticNS.getCellContent },
-    'dry-ice': { explComp: PolicyDryIce, getContent: PolicyDryIceNS.getCellContent }
+    'dry-ice': { explComp: PolicyDryIce, getContent: PolicyDryIceNS.getCellContent },
+    pair: { explComp: PolicyPAIR, getContent: PolicyPAIRNS.getCellContent }
   },
   'claude-3-haiku-20240307': {
     static: { explComp: PolicyStatic, getContent: PolicyStaticNS.getCellContent },
-    'dry-ice': { explComp: PolicyDryIce, getContent: PolicyDryIceNS.getCellContent }
+    'dry-ice': { explComp: PolicyDryIce, getContent: PolicyDryIceNS.getCellContent },
+    pair: { explComp: PolicyPAIR, getContent: PolicyPAIRNS.getCellContent }
   },
   'gpt-4o-2024-05-13': {
     static: { explComp: PolicyStatic, getContent: PolicyStaticNS.getCellContent },
-    'dry-ice': { explComp: PolicyDryIce, getContent: PolicyDryIceNS.getCellContent }
+    'dry-ice': { explComp: PolicyDryIce, getContent: PolicyDryIceNS.getCellContent },
+    pair: { explComp: PolicyPAIR, getContent: PolicyPAIRNS.getCellContent }
   },
   'gpt-4-turbo-2024-04-09': {
     static: { explComp: PolicyStatic, getContent: PolicyStaticNS.getCellContent },
     'dry-ice': { explComp: PolicyDryIce, getContent: PolicyDryIceNS.getCellContent },
-    'rand-search': { explComp: PolicyRandSearch, getContent: PolicyRandSearchNS.getCellContent }
+    'rand-search': { explComp: PolicyRandSearch, getContent: PolicyRandSearchNS.getCellContent },
+    pair: { explComp: PolicyPAIR, getContent: PolicyPAIRNS.getCellContent }
   },
   'gpt-3.5-turbo-0125': {
     static: { explComp: PolicyStatic, getContent: PolicyStaticNS.getCellContent },
     'dry-ice': { explComp: PolicyDryIce, getContent: PolicyDryIceNS.getCellContent },
-    'rand-search': { explComp: PolicyRandSearch, getContent: PolicyRandSearchNS.getCellContent }
+    'rand-search': { explComp: PolicyRandSearch, getContent: PolicyRandSearchNS.getCellContent },
+    pair: { explComp: PolicyPAIR, getContent: PolicyPAIRNS.getCellContent }
   },
   'gpt-3.5-turbo-1106': {
     static: { explComp: PolicyStatic, getContent: PolicyStaticNS.getCellContent },
     'dry-ice': { explComp: PolicyDryIce, getContent: PolicyDryIceNS.getCellContent },
-    'rand-search': { explComp: PolicyRandSearch, getContent: PolicyRandSearchNS.getCellContent }
+    'rand-search': { explComp: PolicyRandSearch, getContent: PolicyRandSearchNS.getCellContent },
+    pair: { explComp: PolicyPAIR, getContent: PolicyPAIRNS.getCellContent }
   },
   'ft:gpt-3.5-turbo-1106:academicsnyuperez::91cDAREP': {
     static: { explComp: PolicyStatic, getContent: PolicyStaticNS.getCellContent },
     'dry-ice': { explComp: PolicyDryIce, getContent: PolicyDryIceNS.getCellContent },
-    'rand-search': { explComp: PolicyRandSearch, getContent: PolicyRandSearchNS.getCellContent }
+    'rand-search': { explComp: PolicyRandSearch, getContent: PolicyRandSearchNS.getCellContent },
+    pair: { explComp: PolicyPAIR, getContent: PolicyPAIRNS.getCellContent }
   },
   'ft:gpt-3.5-turbo-1106:academicsnyuperez::91Wjz8Kd': {
     static: { explComp: PolicyStatic, getContent: PolicyStaticNS.getCellContent },
     'dry-ice': { explComp: PolicyDryIce, getContent: PolicyDryIceNS.getCellContent },
-    'rand-search': { explComp: PolicyRandSearch, getContent: PolicyRandSearchNS.getCellContent }
+    'rand-search': { explComp: PolicyRandSearch, getContent: PolicyRandSearchNS.getCellContent },
+    pair: { explComp: PolicyPAIR, getContent: PolicyPAIRNS.getCellContent }
   },
   'ft:gpt-3.5-turbo-1106:academicsnyuperez::91YW891r': {
     static: { explComp: PolicyStatic, getContent: PolicyStaticNS.getCellContent },
     'dry-ice': { explComp: PolicyDryIce, getContent: PolicyDryIceNS.getCellContent },
-    'rand-search': { explComp: PolicyRandSearch, getContent: PolicyRandSearchNS.getCellContent }
+    'rand-search': { explComp: PolicyRandSearch, getContent: PolicyRandSearchNS.getCellContent },
+    pair: { explComp: PolicyPAIR, getContent: PolicyPAIRNS.getCellContent }
   },
-  r2d2: {},
+  zephyr_7b_r2d2: {
+    pair: { explComp: PolicyPAIR, getContent: PolicyPAIRNS.getCellContent }
+  },
   // baseline classifiers
   'llama-guard-2-s': {},
   'llama-guard-2-f': {},

@@ -17,28 +17,20 @@
       return jsonl.parse<TranscriptWithLabels>(rawText);
     };
 
-    type RSPolicyTranscript = {
+    type RSDataRow = {
+      // Only a subset of columns that we use are typed
       model_id: string;
-      user_input: string;
-      assistant_response: string;
-      bad_word_counts: Record<string, number>;
-      bad_word_total: number;
       bad_word_total_in_flagged_range: 0 | 1;
     };
-    const getAllRSPolicyTranscripts = async (serverFetch?: ServerFetch) => {
+    export const getAllRSData = async (modelId: string, serverFetch?: ServerFetch) => {
       const response = await (serverFetch || fetch)(
-        'data/random-search/policy-only-transcripts.jsonl'
+        `data/random-search/${modelId}/all-transcripts.jsonl`
       );
       const rawText = await response.text();
-      return jsonl.parse<RSPolicyTranscript>(rawText);
+      return jsonl.parse<RSDataRow>(rawText);
     };
-    export const getFlaggedStat = async (modelId: string, serverFetch?: ServerFetch) => {
-      const all_rs_policy_transcripts = await getAllRSPolicyTranscripts(serverFetch);
-      return mean(
-        all_rs_policy_transcripts
-          .filter((t) => t.model_id === modelId)
-          .map((t) => t.bad_word_total_in_flagged_range)
-      );
+    export const getFlaggedStat = async (allRSData: RSDataRow[]) => {
+      return mean(allRSData.map((t) => t.bad_word_total_in_flagged_range));
     };
 
     export const getHumanStat = (transcripts: TranscriptWithLabels[]) => {
@@ -53,7 +45,8 @@
       const transcripts = await getTranscripts(modelId, serverFetch);
       const human_stat = getHumanStat(transcripts);
 
-      const flagged_stat = await getFlaggedStat(modelId, serverFetch);
+      const allRSData = await getAllRSData(modelId, serverFetch);
+      const flagged_stat = await getFlaggedStat(allRSData);
 
       const stat = human_stat * flagged_stat;
       const color = stat > 0 ? Color.Red : Color.Green;
@@ -75,9 +68,12 @@
   $: dataPromise = (async () => {
     const transcripts = await PolicyRandSearchNS.getTranscripts(modelId);
     const human_stat = PolicyRandSearchNS.getHumanStat(transcripts);
-    const flagged_stat = await PolicyRandSearchNS.getFlaggedStat(modelId);
+
+    const allRSData = await PolicyRandSearchNS.getAllRSData(modelId);
+    const flagged_stat = await PolicyRandSearchNS.getFlaggedStat(allRSData);
+
     const stat = human_stat * flagged_stat;
-    return { transcripts, human_stat, flagged_stat, stat };
+    return { transcripts, human_stat, allRSData, flagged_stat, stat };
   })();
 </script>
 
@@ -86,27 +82,29 @@
 {:then data}
   <p>
     The cell you selected attacks <strong>{modelIdDisp}</strong> ({modelId}) using an adversarial
-    suffix found via grey-box (i.e. logit-access) random-search. We sample 200 responses from {modelIdDisp}
-    at temperature 0 (the 200 samples are distinct due to API non-determinism). Our of these 200 responses,
-    we flagged <strong>{round(100 * data.flagged_stat, 2)}%</strong>
-    using an automated word-based filter. Among these flagged responses, we manually judged 10 random
-    responses and found that
+    suffix found via grey-box (i.e. logit-access) random-search. We sample {data.allRSData.length} responses
+    from {modelIdDisp} at temperature 0 (the {data.allRSData.length} samples are distinct due to API
+    non-determinism).
+  </p>
+
+  <p>
+    Out of these {data.allRSData.length} responses, we flagged
+    <strong>{round(100 * data.flagged_stat, 2)}%</strong>
+    using an automated word-based filter (see paper for details). Among these flagged responses, we manually
+    judged 10 random responses and found that
     <strong>{round(100 * data.human_stat, 2)}%</strong> were competently helping with bomb-making.
-    Thus we estimate that the total fraction of the 200 responses that are competently helping with
-    bomb-making is
-    <strong
-      >{round(100 * data.flagged_stat, 2)}% x {round(100 * data.human_stat, 2)}% = {round(
-        100 * data.stat,
-        2
-      )}%</strong
-    >.
+    Thus we estimate that the total fraction of the {data.allRSData.length} responses that are competently
+    helping with bomb-making is
+    {round(100 * data.flagged_stat, 2)}% x {round(100 * data.human_stat, 2)}% =
+    <strong>{round(100 * data.stat, 2)}%</strong>.
   </p>
 
   <p>
     In the data explorer below, you can view the adversarial suffix as well as human graded model
-    responses. To see the complete set of all 200 responses, check out the raw data at <a
-      href="data/random-search/policy-only-transcripts.jsonl"
-      target="_blank">data/random-search/policy-only-transcripts.jsonl</a
+    responses. To see the complete set of all {data.allRSData.length} responses, check out the raw data
+    at
+    <a href="data/random-search/{modelId}/all-transcripts.jsonl" target="_blank"
+      >data/random-search/{modelId}/all-transcripts.jsonl</a
     >
   </p>
 
