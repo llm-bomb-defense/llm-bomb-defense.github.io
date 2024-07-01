@@ -54,8 +54,10 @@
 <div class="transcript-container">
   <h5>
     Human-graded Transcripts
-    <a href={downloadPath} target="_blank" style="font-size: 0.8em;"> (click to download all) </a>
+    <a href={downloadPath} target="_blank" style="font-size: 0.8em;">(click to download all)</a>
   </h5>
+
+  <!-- Navbar -->
   <div
     class="navigation"
     role="toolbar"
@@ -77,6 +79,7 @@
       You can also click here and then use the arrow keys to navigate.</span
     >
   </div>
+
   <div>
     <TranscriptHelp>
       <svelte:fragment slot="sorting-statement">
@@ -85,6 +88,7 @@
       </svelte:fragment>
     </TranscriptHelp>
   </div>
+
   {#if transcripts.length > 0}
     <div class="transcript-item">
       <div class="labels">

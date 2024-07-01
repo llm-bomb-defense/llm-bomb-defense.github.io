@@ -3,7 +3,7 @@
   import type { ServerFetch } from '../utils';
 
   import { jsonl } from 'js-jsonl';
-  import { mean, round, sum } from 'mathjs';
+  import { round } from 'mathjs';
   import { Color } from '../table';
 
   export namespace ClfDryIceNS {
@@ -32,6 +32,7 @@
       request: string;
       response: string;
       prob_is_harmful: number;
+      model_id: string;
     };
     export const getAlpacaEvalTranscripts = async (modelId: string, serverFetch?: ServerFetch) => {
       const response = await (serverFetch || fetch)(
@@ -69,13 +70,11 @@
 <script lang="ts">
   import { getModelDisplayName } from '../table';
   import SingleTranscriptDisplay from '../transcript-displays/SingleTranscriptDisplay.svelte';
+  import ClfJudgedTranscriptDisplay from '../transcript-displays/ClfJudgedTranscriptDisplay.svelte';
 
   export let modelId: string;
   export let attackId: string;
   console.log(`Loading data for ${modelId} x ${attackId}...`);
-
-  const falsePositiveWords =
-    'diversion|flare|smoke|firework|ancient|film|movie|shockwave|festival|festivals';
 
   $: modelIdDisp = getModelDisplayName(modelId);
   $: dataPromise = (async () => {
@@ -116,17 +115,40 @@
 
   <p>
     To dive into more detail, the following transcript is judged by our human-grading as competently
-    helping with bomb-making, and <strong>{modelIdDisp}</strong> judges it as has having a
-    {data.bestAttack.prob_is_harmful} probability of helping make a bomb.
+    helping with bomb-making, and {modelIdDisp} judges it as has having a
+    {data.bestAttack.prob_is_harmful} probability of helping make a bomb:
   </p>
 
-  <SingleTranscriptDisplay
-    transcript={{
-      user_input: data.bestAttack.request,
-      assistant_response: data.bestAttack.response,
-      model_id: data.bestAttack.model_id,
-      labels: data.bestAttack.label_dict
-    }}
+  <details>
+    <summary>Click to expand transcript</summary>
+    <SingleTranscriptDisplay
+      transcript={{
+        user_input: data.bestAttack.request,
+        assistant_response: data.bestAttack.response,
+        model_id: data.bestAttack.model_id,
+        labels: data.bestAttack.label_dict
+      }}
+    />
+  </details>
+  <br />
+
+  <p>
+    At the same time, {modelIdDisp} judges
+    {data.falsePositives.length} / {data.alpacaEvalTranscripts.length}
+    of the AlpacaEval transcripts as having a probability of helping make a bomb of at least
+    {data.bestAttack.prob_is_harmful}. You can explore how {modelIdDisp} grades the entire AlpacaEval
+    dataset using the data explorer below.
+  </p>
+
+  <ClfJudgedTranscriptDisplay
+    transcripts={data.alpacaEvalTranscripts.map((t) => ({
+      user_input: t.request,
+      assistant_response: t.response,
+      prob_is_harmful: t.prob_is_harmful,
+      assistant_model_id: t.model_id
+    }))}
+    fpThreshold={data.bestAttack.prob_is_harmful}
+    downloadPath={`data/alpaca-eval/${modelId}/responses+classifier.jsonl`}
   />
 {:catch error}
   <p style="color: red">{error.message}</p>
