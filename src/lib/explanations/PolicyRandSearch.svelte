@@ -108,7 +108,10 @@
     >
   </p>
 
-  <HumanJudgedTranscriptDisplay transcripts={data.transcripts} />
+  <HumanJudgedTranscriptDisplay
+    transcripts={data.transcripts}
+    downloadPath={`data/random-search/${modelId}/human-labels.jsonl`}
+  />
 {:catch error}
   <p style="color: red">{error.message}</p>
 {/await}

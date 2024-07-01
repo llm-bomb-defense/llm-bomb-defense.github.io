@@ -64,7 +64,10 @@
     and the corresponding human labels given by us authors.
   </p>
 
-  <HumanJudgedTranscriptDisplay transcripts={data.transcripts} />
+  <HumanJudgedTranscriptDisplay
+    transcripts={data.transcripts}
+    downloadPath={`data/dry-ice/${modelId}/human-labels.jsonl`}
+  />
 {:catch error}
   <p style="color: red">{error.message}</p>
 {/await}

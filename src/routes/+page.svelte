@@ -25,7 +25,7 @@
   <title>LLM Bomb Defense</title>
   <meta
     name="description"
-    content="How (Not) to Prevent Your LLM from Helping Someone Make a Bomb"
+    content="Making LLMs Not Help Make Bombs with LLM-based Transcript Classifiers"
   />
 </svelte:head>
 
@@ -33,9 +33,9 @@
   <Row class="text-center">
     <Col md="12">
       <h2>
-        How (Not) to Prevent Your LLM
+        Making LLMs Not Help Make Bombs
         <br />
-        from Helping Someone Make a Bomb
+        with LLM-based Transcript Classifiers
       </h2>
     </Col>
   </Row>

@@ -142,7 +142,10 @@
       >
     </p>
 
-    <HumanJudgedTranscriptDisplay transcripts={data.transcripts} />
+    <HumanJudgedTranscriptDisplay
+      transcripts={data.transcripts}
+      downloadPath={`data/pair/${modelId}/human-labels.jsonl`}
+    />
   {:else}
     To see the complete set of all {data.totalQueries} black-box queries, check out the raw data at
     <a href="data/pair/{modelId}/all-pair-attacks.jsonl" target="_blank"

@@ -1,9 +1,12 @@
 <!-- Coauthor: ChatGPT-4o. -->
-
 <script lang="ts">
   import type { TranscriptWithLabels } from '../data-models';
   import { getAvgRating } from '../data-models';
+  import ColoredRating from './ColoredRating.svelte';
+  import TranscriptHelp from './TranscriptHelp.svelte';
+
   export let transcripts: TranscriptWithLabels[];
+  export let downloadPath: string;
 
   // Sort transcripts based average rating
   transcripts.sort((a, b) => {
@@ -33,9 +36,9 @@
     currentIndex = (currentIndex + 1) % transcripts.length;
   };
   const handleKeydown = (event: KeyboardEvent) => {
-    if (event.key === 'ArrowLeft') {
+    if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
       goToPrevious();
-    } else if (event.key === 'ArrowRight') {
+    } else if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
       goToNext();
     }
   };
@@ -49,6 +52,10 @@
 </script>
 
 <div class="transcript-container">
+  <h5>
+    Human-graded Transcripts
+    <a href={downloadPath} target="_blank" style="font-size: 0.8em;"> (click to download all) </a>
+  </h5>
   <div
     class="navigation"
     role="toolbar"
@@ -63,27 +70,46 @@
       max={transcripts.length}
       value={currentIndex + 1}
       on:input={handleInput}
-    />
+    /> <span> / {transcripts.length} </span>
     <button on:click={goToNext}>Next &gt;</button>
+    &nbsp;&nbsp;
+    <span class="keyboard-shortcut">
+      You can also click here and then use the arrow keys to navigate.</span
+    >
+  </div>
+  <div>
+    <TranscriptHelp>
+      <svelte:fragment slot="sorting-statement">
+        The following transcripts are sorted so the transcripts rated to have more competent
+        bomb-making help are shown first. In case of ties, shorter transcripts are shown first.
+      </svelte:fragment>
+    </TranscriptHelp>
   </div>
   {#if transcripts.length > 0}
     <div class="transcript-item">
       <div class="labels">
         <div>
-          Human Labels &nbsp;&nbsp; (avg. rating {getAvgRating(curTranscript.labels)} / 10):
+          <b>Human Labels</b> &nbsp;&nbsp; (avg. rating <ColoredRating
+            rating={getAvgRating(curTranscript.labels)}
+          />)
         </div>
         <ul>
           {#each Object.entries(curTranscript.labels) as [user, label]}
-            <li>{capitalizeName(user)}: &nbsp;&nbsp; {label} / 10</li>
+            <li>
+              {capitalizeName(user)}: &nbsp;&nbsp;
+              <ColoredRating rating={parseInt(label)} />
+            </li>
           {/each}
         </ul>
       </div>
+
       <div class="user-input">
-        User Input:
+        <b>User Input</b>
         <pre><code>{curTranscript.data.user_input}</code></pre>
       </div>
+
       <div class="assistant-response">
-        Model Response:
+        <b>Model Response</b>
         <pre><code>{curTranscript.data.assistant_response}</code></pre>
       </div>
     </div>
