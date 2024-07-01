@@ -4,6 +4,7 @@ import PolicyStatic, { PolicyStaticNS } from './explanations/PolicyStatic.svelte
 import PolicyDryIce, { PolicyDryIceNS } from './explanations/PolicyDryIce.svelte';
 import PolicyRandSearch, { PolicyRandSearchNS } from './explanations/PolicyRandSearch.svelte';
 import PolicyPAIR, { PolicyPAIRNS } from './explanations/PolicyPAIR.svelte';
+import ClfDryIce, { ClfDryIceNS } from './explanations/ClfDryIce.svelte';
 
 class Attack {
   id: string;
@@ -66,11 +67,11 @@ export const models = {
     new Model('zephyr_7b_r2d2', 'r2d2')
   ],
   baselineClfs: [
-    new Model('llama-guard-2-s', 'LlamaGuard-2-s'),
-    new Model('llama-guard-2-f', 'LlamaGuard-2-f'),
-    new Model('harmbench-4o', 'HarmBench-4o'),
+    new Model('llama-guard-2-short', 'LlamaGuard-2-s'),
+    new Model('llama-guard-2-full', 'LlamaGuard-2-f'),
+    new Model('harmbench-gpt-4o', 'HarmBench-4o'),
     new Model('harmbench-llama', 'HarmBench-llama'),
-    new Model('harmbench-llama', 'Harmbench-mistral')
+    new Model('harmbench-mistral', 'Harmbench-mistral')
   ],
   ourClfs: [new Model('cot-eg-4t', 'CoT-eg-4t'), new Model('cot-4o', 'CoT-4o')]
 };
@@ -156,11 +157,21 @@ export const table: Table = {
     pair: { explComp: PolicyPAIR, getContent: PolicyPAIRNS.getCellContent }
   },
   // baseline classifiers
-  'llama-guard-2-s': {},
-  'llama-guard-2-f': {},
-  'harmbench-4o': {},
-  'harmbench-llama': {},
-  'harmbench-mistral': {},
+  'llama-guard-2-short': {
+    'dry-ice': {explComp: ClfDryIce, getContent: ClfDryIceNS.getCellContent}
+  },
+  'llama-guard-2-full': {
+    'dry-ice': {explComp: ClfDryIce, getContent: ClfDryIceNS.getCellContent}
+  },
+  'harmbench-gpt-4o': {
+    'dry-ice': {explComp: ClfDryIce, getContent: ClfDryIceNS.getCellContent}
+  },
+  'harmbench-llama': {
+    'dry-ice': {explComp: ClfDryIce, getContent: ClfDryIceNS.getCellContent}
+  },
+  'harmbench-mistral': {
+    'dry-ice': {explComp: ClfDryIce, getContent: ClfDryIceNS.getCellContent}
+  },
   // our classifiers
   'cot-eg-4t': {},
   'cot-4o': {}

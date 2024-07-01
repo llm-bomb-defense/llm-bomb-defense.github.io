@@ -112,6 +112,7 @@
         {/each}
 
         <div style="grid-column: 1 / -1; height: 5px;"></div>
+        <div class="model-cell"><b>Policy Only Models</b></div>
         <div style="grid-column: 2 / -1; text-align: center;">Attack Success Rate (%)</div>
         {#each models.policyOnly as model}
           <div class="model-cell">{model.displayStr}</div>
@@ -139,6 +140,7 @@
         {/each}
 
         <div style="grid-column: 1 / -1; height: 15px;"></div>
+        <div class="model-cell"><b>Other Clf. Defenses</b></div>
         <div style="grid-column: 2 / -1; text-align: center;">AlpacaEval Refusal Rate (%)</div>
         {#each models.baselineClfs as model}
           <div class="model-cell">{model.displayStr}</div>
@@ -166,6 +168,7 @@
         {/each}
 
         <div style="grid-column: 1 / -1; height: 15px;"></div>
+        <div class="model-cell"><b>Our Clf. Defenses</b></div>
         <div style="grid-column: 2 / -1; text-align: center;">
           Single working attack input found?
         </div>

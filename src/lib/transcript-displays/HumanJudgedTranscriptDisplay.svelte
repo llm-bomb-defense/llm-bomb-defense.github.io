@@ -1,8 +1,8 @@
 <!-- Coauthor: ChatGPT-4o. -->
 
 <script lang="ts">
-  import type { TranscriptWithLabels } from './data-models';
-  import { getAvgRating } from './data-models';
+  import type { TranscriptWithLabels } from '../data-models';
+  import { getAvgRating } from '../data-models';
   export let transcripts: TranscriptWithLabels[];
 
   // Sort transcripts based average rating
@@ -92,42 +92,7 @@
   {/if}
 </div>
 
-<style>
-  .transcript-container {
-    margin: 20px;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    background-color: #f9f9f9;
-  }
-  .navigation {
-    display: flex;
-    /* align-items: center; */
-    /* justify-content: center; */
-    margin-bottom: 10px;
-  }
-  .navigation button {
-    margin: 0 10px;
-    padding: 4px;
-    border: 1px solid #ccc;
-    background-color: #f5f5f5;
-    cursor: pointer;
-  }
-  .navigation input {
-    width: 70px; /* Increase the width */
-    text-align: center;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  pre {
-    background-color: #f5f5f5;
-    padding: 10px;
-    border-radius: 5px;
-    white-space: pre-wrap; /* Enables text wrapping */
-    word-wrap: break-word; /* Ensures long words are wrapped */
-  }
-  code {
-    font-family: 'Courier New', Courier, monospace;
-  }
+<style lang="scss">
+  @import './styles/navigation.scss';
+  @import './styles/transcript.scss';
 </style>

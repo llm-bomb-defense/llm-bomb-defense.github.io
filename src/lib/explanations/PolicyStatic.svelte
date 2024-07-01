@@ -34,7 +34,7 @@
 
 <script lang="ts">
   import { getModelDisplayName } from '../table';
-  import TranscriptDisplay from '../TranscriptDisplay.svelte';
+  import HumanJudgedTranscriptDisplay from '../transcript-displays/HumanJudgedTranscriptDisplay.svelte';
 
   export let modelId: string;
   export let attackId: string;
@@ -97,7 +97,7 @@
       </a>.
     </p>
 
-    <TranscriptDisplay transcripts={data.transcripts} />
+    <HumanJudgedTranscriptDisplay transcripts={data.transcripts} />
   {:else}
     <p>
       {modelIdDisp} had <b>no transcripts that were flagged</b> by our CoT-eg-4t classifier.

@@ -58,7 +58,7 @@
 
 <script lang="ts">
   import { getModelDisplayName } from '../table';
-  import TranscriptDisplay from '../TranscriptDisplay.svelte';
+  import HumanJudgedTranscriptDisplay from '../transcript-displays/HumanJudgedTranscriptDisplay.svelte';
 
   export let modelId: string;
   export let attackId: string;
@@ -108,7 +108,7 @@
     >
   </p>
 
-  <TranscriptDisplay transcripts={data.transcripts} />
+  <HumanJudgedTranscriptDisplay transcripts={data.transcripts} />
 {:catch error}
   <p style="color: red">{error.message}</p>
 {/await}

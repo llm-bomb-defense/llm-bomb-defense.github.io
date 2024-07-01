@@ -17,7 +17,7 @@
     };
 
     type PAIRDataRow = {
-      // Only a subset of columns that we use are typed
+      // Only a subset of fields that we use are typed
       target_model_id: string;
       n_pair_steps: number;
       bad_word_total_in_flagged_range: boolean | null;
@@ -66,7 +66,7 @@
 
 <script lang="ts">
   import { getModelDisplayName } from '../table';
-  import TranscriptDisplay from '../TranscriptDisplay.svelte';
+  import HumanJudgedTranscriptDisplay from '../transcript-displays/HumanJudgedTranscriptDisplay.svelte';
 
   export let modelId: string;
   export let attackId: string;
@@ -142,7 +142,7 @@
       >
     </p>
 
-    <TranscriptDisplay transcripts={data.transcripts} />
+    <HumanJudgedTranscriptDisplay transcripts={data.transcripts} />
   {:else}
     To see the complete set of all {data.totalQueries} black-box queries, check out the raw data at
     <a href="data/pair/{modelId}/all-pair-attacks.jsonl" target="_blank"
