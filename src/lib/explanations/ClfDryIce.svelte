@@ -102,13 +102,13 @@
     against dry-ice attacks that were levied against them.
   </p>
 
-  <p>
+  <p class="footnote">
     <sup>1</sup> With the exception of R2D2.
   </p>
 
   <p>
     We found that in order for {modelIdDisp} to flag all responses containing competent bomb-assistance
-    (as defined by the rubric in our paper), we would also need to flag
+    (as defined by the <a href="human-rubric.txt" target="_blank">rubric</a> in our paper), we would also need to flag
     <strong>{round(100 * data.stat, 2)}%</strong>
     of the responses gpt-3.5-turbo-0125 gives in response to AlpacaEval prompts.
   </p>

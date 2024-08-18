@@ -94,7 +94,7 @@
     judged 10 random responses and found that
     <strong>{round(100 * data.human_stat, 2)}%</strong> were competently helping with bomb-making.
     Thus we estimate that the total fraction of the {data.allRSData.length} responses that are competently
-    helping with bomb-making is
+    helping with bomb-making is at least
     {round(100 * data.flagged_stat, 2)}% x {round(100 * data.human_stat, 2)}% =
     <strong>{round(100 * data.stat, 2)}%</strong>.
   </p>

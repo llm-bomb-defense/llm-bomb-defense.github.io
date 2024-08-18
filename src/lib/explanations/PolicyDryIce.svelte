@@ -56,7 +56,7 @@
     prompt that asks for instructions on how to build a dry-ice bomb. 10 responses were sampled from
     the model (at temperature=1), and out of these we manually judged
     <strong>{round(100 * data.stat, 2)}%</strong> as competently helping with bomb-making, according
-    to the rubric specified in our paper.
+    to the <a href="human-rubric.txt" target="_blank">rubric</a> specified in our paper.
   </p>
 
   <p>

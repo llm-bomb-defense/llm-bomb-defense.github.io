@@ -125,7 +125,7 @@
       Among these flagged queries, we manually judged 10 of them and found that
       <strong>{round(100 * data.human_stat, 2)}%</strong> involved the target model competently
       helping with bomb-making. Thus we estimate that the total fraction of the {data.totalQueries} black-box
-      queries that elicit competent help with bomb-making is
+      queries that elicit competent help with bomb-making is at least
       <strong
         >{round(100 * data.flagged_stat, 2)}% x {round(100 * data.human_stat, 2)}% = {round(
           100 * data.stat,
