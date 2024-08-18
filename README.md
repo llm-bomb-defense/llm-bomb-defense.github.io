@@ -9,8 +9,9 @@ It is recommended you work with this project as a submodule of
 To server the website locally, you should do the following:
 
 1. Install node using a node version manager like [fnm](https://github.com/Schniz/fnm). We use node version v22.2.0.
-1. Install dependencies with `npm install`.
-1. Start the development server with `npm run dev`.
+2. Install dependencies with `npm install`.
+3. Start the development server with `npm run dev`.
+4. You can preview the static version of the site using the command `npm run build && npm run preview`.
 
 ### Building
 

@@ -5,6 +5,7 @@ import PolicyDryIce, { PolicyDryIceNS } from './explanations/PolicyDryIce.svelte
 import PolicyRandSearch, { PolicyRandSearchNS } from './explanations/PolicyRandSearch.svelte';
 import PolicyPAIR, { PolicyPAIRNS } from './explanations/PolicyPAIR.svelte';
 import ClfDryIce, { ClfDryIceNS } from './explanations/ClfDryIce.svelte';
+import ClfPromptInj, { ClfPromptInjNS } from './explanations/ClfPromptInj.svelte';
 
 class Attack {
   id: string;
@@ -158,19 +159,24 @@ export const table: Table = {
   },
   // baseline classifiers
   'llama-guard-2-short': {
-    'dry-ice': {explComp: ClfDryIce, getContent: ClfDryIceNS.getCellContent}
+    'dry-ice': { explComp: ClfDryIce, getContent: ClfDryIceNS.getCellContent },
+    'prompt-inj': { explComp: ClfPromptInj, getContent: ClfPromptInjNS.getCellContent }
   },
   'llama-guard-2-full': {
-    'dry-ice': {explComp: ClfDryIce, getContent: ClfDryIceNS.getCellContent}
+    'dry-ice': { explComp: ClfDryIce, getContent: ClfDryIceNS.getCellContent },
+    'prompt-inj': { explComp: ClfPromptInj, getContent: ClfPromptInjNS.getCellContent }
   },
   'harmbench-gpt-4o': {
-    'dry-ice': {explComp: ClfDryIce, getContent: ClfDryIceNS.getCellContent}
+    'dry-ice': { explComp: ClfDryIce, getContent: ClfDryIceNS.getCellContent },
+    'prompt-inj': { explComp: ClfPromptInj, getContent: ClfPromptInjNS.getCellContent }
   },
   'harmbench-llama': {
-    'dry-ice': {explComp: ClfDryIce, getContent: ClfDryIceNS.getCellContent}
+    'dry-ice': { explComp: ClfDryIce, getContent: ClfDryIceNS.getCellContent },
+    'prompt-inj': { explComp: ClfPromptInj, getContent: ClfPromptInjNS.getCellContent }
   },
   'harmbench-mistral': {
-    'dry-ice': {explComp: ClfDryIce, getContent: ClfDryIceNS.getCellContent}
+    'dry-ice': { explComp: ClfDryIce, getContent: ClfDryIceNS.getCellContent },
+    'prompt-inj': { explComp: ClfPromptInj, getContent: ClfPromptInjNS.getCellContent }
   },
   // our classifiers
   'cot-eg-4t': {},
