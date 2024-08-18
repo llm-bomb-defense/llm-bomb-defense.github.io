@@ -91,8 +91,13 @@
           target="_blank">arxiv.org/xxxx.yyyyy</a
         >, which explores how to defend an LLM so that it will not help someone make a lethal bomb.<sup
           >1</sup
-        > This is a toy problem that is supposed to be a stand-in for the more general problem of high-reliability
-        control of LLM behavior.
+        >
+        This is a toy problem that is supposed to be a stand-in for the more general problem of
+        high-reliability control of LLM behavior. The source code and data backing this
+        site can be found
+        <a href="https://github.com/llm-bomb-defense/llm-bomb-defense.github.io" target="_blank"
+          >here</a
+        >.
       </p>
       <p class="footnote">
         <sup>1</sup> By "will not help someone make a lethal bomb", we mean that it is not possible
@@ -230,9 +235,13 @@
   <!-- Credits -->
   <Row class="text-center mt-5">
     <Col md="8" class="offset-md-2">
-      <p>
+      <p class="site-footer">
         This site's design is adapted from
-        <a href="https://say-can.github.io/" target="_blank">say-can</a>.
+        <a href="https://say-can.github.io/" target="_blank">say-can</a>. It's source code can be
+        found
+        <a href="https://github.com/llm-bomb-defense/llm-bomb-defense.github.io" target="_blank"
+          >here</a
+        >.
       </p>
     </Col>
   </Row>

@@ -135,6 +135,10 @@ a {
   max-width: calc(100% - 6em);
 }
 
+.site-footer {
+  font-size: 0.8em;
+}
+
 .grid-container {
   display: grid;
   grid-template-columns: repeat(7, min-content);

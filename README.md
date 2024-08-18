@@ -1,4 +1,4 @@
-This repo hosts the Github Pages website for the paper "How (Not) to Prevent Your LLM from Helping Someone Make a Bomb".
+This repo hosts the Github Pages website for the paper "Making LLMs Not Help Make Bombs with LLM-based Transcript Classifiers".
 
 ## Development instructions
 
@@ -14,7 +14,8 @@ To server the website locally, you should do the following:
 
 ### Building
 
-Builds and deploys are taken care of automatically by GitHub Actions.
+Builds and deploys are taken care of automatically by GitHub Actions
+(upon pushing to the `main` branch).
 
 ### Credits
 
