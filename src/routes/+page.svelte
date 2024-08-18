@@ -92,9 +92,8 @@
         >, which explores how to defend an LLM so that it will not help someone make a lethal bomb.<sup
           >1</sup
         >
-        This is a toy problem that is supposed to be a stand-in for the more general problem of
-        high-reliability control of LLM behavior. The source code and data backing this
-        site can be found
+        This is a toy problem that is supposed to be a stand-in for the more general problem of high-reliability
+        control of LLM behavior. The source code and data backing this site can be found
         <a href="https://github.com/llm-bomb-defense/llm-bomb-defense.github.io" target="_blank"
           >here</a
         >.
