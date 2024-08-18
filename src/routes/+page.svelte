@@ -89,15 +89,23 @@
         <a
           href="https://static.wikia.nocookie.net/angrybirds/images/3/3b/Bomb.png/revision/latest/scale-to-width/360?cb=20220506195951"
           target="_blank">arxiv.org/xxxx.yyyyy</a
-        >. The paper explores how to defend an LLM so that it will not help someone make a lethal
-        bomb. This is a toy problem that is supposed to be a stand-in for a more general problem of
-        high-reliability control of LLM behavior.
+        >, which explores how to defend an LLM so that it will not help someone make a lethal bomb.<sup
+          >1</sup
+        > This is a toy problem that is supposed to be a stand-in for the more general problem of high-reliability
+        control of LLM behavior.
+      </p>
+      <p class="footnote">
+        <sup>1</sup> By "will not help someone make a lethal bomb", we mean that it is not possible
+        to ask the LLM a question x and have it respond with a response y such that the transcript
+        [x, y] is judged by a <em>human</em> as "bomb-helping" according to the following rubric:
+        <a href="human-rubric.txt" target="_blank">human-rubric.txt</a>.
       </p>
       <p>
-        Each number in the table below represents the vulnerability of a particular language model
-        to an attack that tries to get it to help make a bomb. Click on a cell to read about the
-        methodology we used to compute the number, and to see the human judgment data associated
-        with that number.
+        The table below shows how different language models fare against different attacks that try
+        to get the model to help make a bomb. Each row represents a particular language model
+        (possibly defended), and each column represents a particular attack. Click on a cell to read
+        about the methodology we used to compute the number in the cell, and to see the human
+        judgment data summarized by that number.
       </p>
     </Col>
   </Row>
