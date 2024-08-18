@@ -107,7 +107,7 @@
       </p>
       <p>
         The table below shows how different language models fare against different attacks that try
-        to get the model to help make a bomb. Each row represents a particular language model
+        to get the model to help make a lethal bomb. Each row represents a particular language model
         (possibly defended), and each column represents a particular attack. Click on a cell to read
         about the methodology we used to compute the number in the cell, and to see the human
         judgment data summarized by that number.
